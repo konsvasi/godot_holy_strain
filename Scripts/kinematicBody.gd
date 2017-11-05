@@ -4,7 +4,7 @@ onready var world = get_world_2d().get_direct_space_state()
 var direction = Vector2()
 var previousDirection = Vector2()
 onready var sprite = get_node("Sprite")
-onready var animationPlayer = get_node("AnimationPlayer")
+#onready var animationPlayer = get_node("AnimationPlayer")
 const SPEED = 1
 var moving = false
 var startPos = Vector2(0,0)
@@ -40,29 +40,33 @@ func _fixed_process(delta):
 			direction.y = 1
 			sprite.set_frame(0)
 			if (direction != previousDirection):
-				animationPlayer.play("walk_down")
+				print("walk_down_animation");
+				#animationPlayer.play("walk_down")
 		elif right:
 			moving = true
 			direction.x = 1
 			sprite.set_frame(1)
 			if (direction != previousDirection):
-				animationPlayer.play("walk_right")
+				print("walk_right_animation");
+				#animationPlayer.play("walk_right")
 		elif left:
 			moving = true
 			direction.x = -1
 			sprite.set_frame(2)
 			if (direction != previousDirection):
-				animationPlayer.play("walk_left")
+				print("walk_left_animation");
+				#animationPlayer.play("walk_left")
 		elif up:
 			moving = true
 			direction.y = -1
 			sprite.set_frame(3)
 			if (direction != previousDirection):
-				animationPlayer.play("walk_up")
+				print("walk_up_animation");
+				#animationPlayer.play("walk_up")
 				
 		else:
 			direction = Vector2(0,0)
-			animationPlayer.stop(true)
+			#animationPlayer.stop(true)
 			moving = false
 			
 			if menu and !interact:
@@ -74,19 +78,15 @@ func _fixed_process(delta):
 		#down
 		if frame == 0:
 			result = world.intersect_point(get_pos() + Vector2(0, 16))
-			#get_parent().get_node("face_test").set_pos(get_pos() + Vector2(0, 16))
 		#right
 		elif frame == 1:
 			result = world.intersect_point(get_pos() + Vector2(16, 0))
-			#get_parent().get_node("face_test").set_pos(get_pos() + Vector2(16, 0))
 		#left
 		elif frame == 2:
 			result = world.intersect_point(get_pos() + Vector2(-16, 0))
-			#get_parent().get_node("face_test").set_pos(get_pos() + Vector2(-16, 0))
 		#up
 		elif frame == 3:
 			result = world.intersect_point(get_pos() + Vector2(0, -16))
-			#get_parent().get_node("face_test").set_pos(get_pos() + Vector2(0, -16))
 		
 		interact(result)
 	
