@@ -4,7 +4,7 @@ onready var world = get_world_2d().get_direct_space_state()
 var direction = Vector2()
 var previousDirection = Vector2()
 onready var sprite = get_node("Sprite")
-#onready var animationPlayer = get_node("AnimationPlayer")
+onready var animationPlayer = get_node("AnimationPlayer")
 const SPEED = 1
 var moving = false
 var startPos = Vector2(0,0)
@@ -40,33 +40,29 @@ func _fixed_process(delta):
 			direction.y = 1
 			sprite.set_frame(0)
 			if (direction != previousDirection):
-				print("walk_down_animation");
-				#animationPlayer.play("walk_down")
+				animationPlayer.play("walk_down")
 		elif right:
 			moving = true
 			direction.x = 1
 			sprite.set_frame(1)
 			if (direction != previousDirection):
-				print("walk_right_animation");
-				#animationPlayer.play("walk_right")
+				animationPlayer.play("walk_right")
 		elif left:
 			moving = true
 			direction.x = -1
 			sprite.set_frame(2)
 			if (direction != previousDirection):
-				print("walk_left_animation");
-				#animationPlayer.play("walk_left")
+				animationPlayer.play("walk_left")
 		elif up:
 			moving = true
 			direction.y = -1
 			sprite.set_frame(3)
 			if (direction != previousDirection):
-				print("walk_up_animation");
-				#animationPlayer.play("walk_up")
+				animationPlayer.play("walk_up")
 				
 		else:
 			direction = Vector2(0,0)
-			#animationPlayer.stop(true)
+			animationPlayer.stop(true)
 			moving = false
 			
 			if menu and !interact:
