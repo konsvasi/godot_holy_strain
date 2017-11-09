@@ -66,7 +66,8 @@ func _fixed_process(delta):
 			moving = false
 			
 			if menu and !interact:
-				get_node("Camera2D/Menu").openMenu()
+				print("implement the menu")
+				#get_node("Camera2D/Menu").openMenu()
 	
 
 	if interact:
