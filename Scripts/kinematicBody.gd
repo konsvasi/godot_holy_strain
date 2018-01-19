@@ -5,6 +5,8 @@ var direction = Vector2()
 var previousDirection = Vector2()
 onready var sprite = get_node("Sprite")
 onready var animationPlayer = get_node("AnimationPlayer")
+onready var interactBubble = get_node("Interaction")
+
 const SPEED = 1
 var moving = false
 var startPos = Vector2(0,0)
@@ -68,7 +70,7 @@ func _fixed_process(delta):
 			if menu and !interact:
 				print("implement the menu")
 				#get_node("Camera2D/Menu").openMenu()
-	
+
 
 	if interact:
 		var frame = sprite.get_frame()
@@ -96,11 +98,28 @@ func _fixed_process(delta):
 	menu = false
 
 func interact(result):
-	print(sprite.get_frame())
+	print(result)
 	
 	for dict in result:
+		print(typeof(dict.collider))
 		if typeof(dict.collider) == TYPE_OBJECT && dict.collider.has_node("Interact"):
-			get_node("Camera2D/DialogBox").set_hidden(false)
+			#get_node("Camera2D/DialogBox").set_hidden(false)
 			
+			if (!interactBubble.is_hidden()):
+				interactBubble.hide()
+				#instead of queue free call function that handles the object
+				dict.collider.queue_free()
 			#get interact node from other body and pass it's text to the function
-			get_node("Camera2D/DialogBox").printDialog(dict.collider.get_node("Interact").text)
+			#get_node("Camera2D/DialogBox").printDialog(dict.collider.get_node("Interact").text)
+
+func _on_Area2D_body_enter( body ):
+	print("Entered area", body.get_type())
+
+	if (body.get_type() == "KinematicBody2D"):
+		interactBubble.show()
+
+
+func _on_Area2D_body_exit( body ):
+	print("Exited area", body.get_type())
+	if (body.get_type() == "KinematicBody2D"):
+		interactBubble.hide()
