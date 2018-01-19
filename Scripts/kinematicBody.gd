@@ -6,6 +6,7 @@ var previousDirection = Vector2()
 onready var sprite = get_node("Sprite")
 onready var animationPlayer = get_node("AnimationPlayer")
 onready var interactBubble = get_node("Interaction")
+onready var debugSprite = get_node("debugSprite")
 
 const SPEED = 1
 var moving = false
@@ -77,15 +78,21 @@ func _fixed_process(delta):
 		#down
 		if frame == 0:
 			result = world.intersect_point(get_pos() + Vector2(0, 16))
+			print("Position: ", Vector2(0, 16))
+			debugSprite.set_pos(Vector2(0,16))
+			
 		#right
 		elif frame == 1:
-			result = world.intersect_point(get_pos() + Vector2(16, 0))
+			result = world.intersect_point(get_pos() + Vector2(16, 8))
+			debugSprite.set_pos(Vector2(10, 8))
 		#left
 		elif frame == 2:
-			result = world.intersect_point(get_pos() + Vector2(-16, 0))
+			result = world.intersect_point(get_pos() + Vector2(-16, 8))
+			debugSprite.set_pos(Vector2(-10, 8))
 		#up
 		elif frame == 3:
 			result = world.intersect_point(get_pos() + Vector2(0, -16))
+			debugSprite.set_pos(Vector2(0, -16))
 		
 		interact(result)
 	
@@ -98,13 +105,14 @@ func _fixed_process(delta):
 	menu = false
 
 func interact(result):
-	print(result)
+	print("Result: ", result)
 	
 	for dict in result:
 		print(typeof(dict.collider))
 		if typeof(dict.collider) == TYPE_OBJECT && dict.collider.has_node("Interact"):
 			#get_node("Camera2D/DialogBox").set_hidden(false)
 			
+			print("Interact bubble: ", interactBubble.is_hidden())
 			if (!interactBubble.is_hidden()):
 				interactBubble.hide()
 				#instead of queue free call function that handles the object
