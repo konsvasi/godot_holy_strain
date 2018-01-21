@@ -11,7 +11,6 @@ onready var debugSprite = get_node("debugSprite")
 const SPEED = 1
 var moving = false
 var startPos = Vector2(0,0)
-var canMove = true
 var interact = false
 var menu = false
 
@@ -37,39 +36,38 @@ func _fixed_process(delta):
 	var down = Input.is_action_pressed("DOWN")
 	
 	var result = world.intersect_point(get_pos())
-	if canMove:
-		if down:
-			moving = true
-			direction.y = 1
-			sprite.set_frame(0)
-			if (direction != previousDirection):
-				animationPlayer.play("walk_down")
-		elif right:
-			moving = true
-			direction.x = 1
-			sprite.set_frame(1)
-			if (direction != previousDirection):
-				animationPlayer.play("walk_right")
-		elif left:
-			moving = true
-			direction.x = -1
-			sprite.set_frame(2)
-			if (direction != previousDirection):
-				animationPlayer.play("walk_left")
-		elif up:
-			moving = true
-			direction.y = -1
-			sprite.set_frame(3)
-			if (direction != previousDirection):
-				animationPlayer.play("walk_up")
-				
-		else:
-			direction = Vector2(0,0)
-			animationPlayer.stop(true)
-			moving = false
+	if down:
+		moving = true
+		direction.y = 1
+		sprite.set_frame(0)
+		if (direction != previousDirection):
+			animationPlayer.play("walk_down")
+	elif right:
+		moving = true
+		direction.x = 1
+		sprite.set_frame(1)
+		if (direction != previousDirection):
+			animationPlayer.play("walk_right")
+	elif left:
+		moving = true
+		direction.x = -1
+		sprite.set_frame(2)
+		if (direction != previousDirection):
+			animationPlayer.play("walk_left")
+	elif up:
+		moving = true
+		direction.y = -1
+		sprite.set_frame(3)
+		if (direction != previousDirection):
+			animationPlayer.play("walk_up")
 			
-			if menu and !interact:
-				get_node("Camera2D/Menu").openMenu()
+	else:
+		direction = Vector2(0,0)
+		animationPlayer.stop(true)
+		moving = false
+
+		if menu and !interact:
+			get_node("Camera2D/Menu").openMenu()
 
 
 	if interact:

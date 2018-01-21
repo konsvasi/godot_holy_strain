@@ -6,6 +6,7 @@ var open = false
 
 var up = false
 var down = false
+var selectOption = false
 
 var currentLabel = 0
 var labels
@@ -22,14 +23,11 @@ func _ready():
 	
 func _fixed_process(delta):
 	if open:
-		#add code to move arrow
-		print("Add code to move arrow")
 		#if open and menu button pressed
-		print("MENU:", menu)
 		if menu:
 			set_hidden(true)
 			#let player move again
-			player.canMove = true
+			get_tree().set_pause(false)
 			open = false
 			
 		if up:
@@ -45,6 +43,10 @@ func _fixed_process(delta):
 			else:
 				currentLabel += 1
 			pointerUpdate()
+		
+		if selectOption:
+			print("Selected: ", labels[currentLabel].get_text())
+		
 		menu = false
 		up = false
 		down = false
@@ -63,10 +65,14 @@ func _unhandled_key_input(key_event):
 			up = true
 		if key_event.is_action_released("ui_up"):
 			up = false
+		if key_event.is_action_pressed("select_option"):
+			selectOption = true
+		if key_event.is_action_released("select_option"):
+			selectOption = false
 			
 func openMenu():
 	set_hidden(false)
-	player.canMove = false
+	get_tree().set_pause(true)
 	menu = false
 	open = true
 	
