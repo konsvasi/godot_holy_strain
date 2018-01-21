@@ -105,7 +105,6 @@ func interact(result):
 	print("Result: ", result)
 	
 	for dict in result:
-		print(typeof(dict.collider))
 		if typeof(dict.collider) == TYPE_OBJECT && dict.collider.has_node("Interact"):
 			#get_node("Camera2D/DialogBox").set_hidden(false)
 			
@@ -114,17 +113,16 @@ func interact(result):
 				interactBubble.hide()
 				#instead of queue free call function that handles the object
 				dict.collider.queue_free()
+				var item = {"Name": "testName", "Description": "test despriction"}
+				globals.addItemToInventory(item)
 			#get interact node from other body and pass it's text to the function
 			#get_node("Camera2D/DialogBox").printDialog(dict.collider.get_node("Interact").text)
 
 func _on_Area2D_body_enter( body ):
-	print("Entered area", body.get_type())
-
 	if (body.get_type() == "KinematicBody2D"):
 		interactBubble.show()
 
 
 func _on_Area2D_body_exit( body ):
-	print("Exited area", body.get_type())
 	if (body.get_type() == "KinematicBody2D"):
 		interactBubble.hide()

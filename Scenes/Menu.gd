@@ -45,7 +45,11 @@ func _fixed_process(delta):
 			pointerUpdate()
 		
 		if selectOption:
-			print("Selected: ", labels[currentLabel].get_text())
+			var currentLabelText = labels[currentLabel].get_text()
+			
+			if currentLabelText == "Bag":
+				print("Open inventory")
+				get_tree().change_scene("res://Scenes/Inventory.tscn")
 		
 		menu = false
 		up = false

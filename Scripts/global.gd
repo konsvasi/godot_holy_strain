@@ -22,3 +22,7 @@ func setScene(scene):
 #		if (item.id == ID):
 #			return true
 #	return false
+
+func addItemToInventory(item):
+	print("Get item and add it to inventory")
+	inventory.insert(inventory.size() - 1, item)
